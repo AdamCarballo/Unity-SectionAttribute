@@ -4,7 +4,6 @@ public class SectionAttributeTutorial : MonoBehaviour {
 
 	private const string Path = "Assets/Unity-SectionAttribute/Scripts/Demo/";
 
-
 	[Section("How to use Section Attributes", "Add a [Section] attribute on top of any field and it will be drawn like a header")]
 	public int PublicIntField;
 	public int AntoherUnreleatedField;

@@ -4,8 +4,10 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(SectionAttribute))]
 public class SectionDrawer : PropertyDrawer {
 
+	private const string Tag = "<b>Section Attribute</b> - ";
+
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
-		SectionAttribute note = attribute as SectionAttribute;
+		SectionAttribute section = attribute as SectionAttribute;
 
 		Color fadedText = GUI.color;
 		fadedText.a = 0.75f;
@@ -23,32 +25,32 @@ public class SectionDrawer : PropertyDrawer {
 		titleRect.height = 18;
 
 		// Check if an icon is included and draw it with the title
-		if (!string.IsNullOrEmpty(note.IconPath)) {
-			Texture icon = AssetDatabase.LoadAssetAtPath<Texture>(note.IconPath);
+		if (!string.IsNullOrEmpty(section.IconPath)) {
+			Texture icon = AssetDatabase.LoadAssetAtPath<Texture>(section.IconPath);
 			if (icon == null) {
-				Debug.LogWarning("<b>Section Attribute</b> - The icon for this section cannot be found. Check the path.");
-				EditorGUI.LabelField(titleRect, note.Title, headerStyle);
+				Debug.LogWarning(Tag + "The icon for this section cannot be found. Check the path.");
+				EditorGUI.LabelField(titleRect, section.Title, headerStyle);
 			} else {
-				EditorGUI.LabelField(titleRect, new GUIContent(note.Title, icon), headerStyle);
+				EditorGUI.LabelField(titleRect, new GUIContent(section.Title, icon), headerStyle);
 			}
 		} else {
-			EditorGUI.LabelField(titleRect, note.Title, headerStyle);
+			EditorGUI.LabelField(titleRect, section.Title, headerStyle);
 		}
 
 		// Check if a description is included and draw it
-		if (!string.IsNullOrEmpty(note.Description)) {
+		if (!string.IsNullOrEmpty(section.Description)) {
 			Rect descRect = titleRect;
 			descRect.y += 15;
-			EditorGUI.LabelField(descRect, note.Description, messageStyle);
+			EditorGUI.LabelField(descRect, section.Description, messageStyle);
 		}
 
 		// Calculate separator Rect
 		Rect separatorRect = position;
-		separatorRect.y += string.IsNullOrEmpty(note.Description) ? 30 : 42;
+		separatorRect.y += string.IsNullOrEmpty(section.Description) ? 30 : 42;
 		separatorRect.height = 1.5f;
 
 		// Check if separator is enabled and draw it
-		if (note.Separator) {
+		if (section.Separator) {
 			GUI.Box(separatorRect, "");
 		}
 
@@ -68,7 +70,7 @@ public class SectionDrawer : PropertyDrawer {
 	}
 
 	public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-		SectionAttribute note = attribute as SectionAttribute;
-		return string.IsNullOrEmpty(note.Description) ? 56 : 68;
+		SectionAttribute section = attribute as SectionAttribute;
+		return string.IsNullOrEmpty(section.Description) ? 56 : 68;
 	}
 }
